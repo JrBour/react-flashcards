@@ -4,8 +4,6 @@ import { AnswerItem, AnswersWrapper, QuestionTitle } from './style';
 const Question = ({ question, answers, nextStep, wrongAnswer }) => {
 
   const [answersStatus, setAnswersStatus] = useState([]);
-  // Reset this after each change of question
-
 
   useEffect(() => {
     const editAnswerStatus = answers.map(answer => ({
@@ -13,7 +11,7 @@ const Question = ({ question, answers, nextStep, wrongAnswer }) => {
       answer: answer.answer === question.answer
     }));
     setAnswersStatus(editAnswerStatus);
-  }, []);
+  }, [question]);
 
   const checkAnswer = (status, index) => {
     const editAnswersStatus = answers.map((answer, answerIndex) => {
@@ -30,12 +28,11 @@ const Question = ({ question, answers, nextStep, wrongAnswer }) => {
 
     setAnswersStatus(editAnswersStatus);
     
-    console.log(status)
-    if (status.answer) {
+    if (editAnswersStatus[index].answer) {
       setTimeout(() => {
         nextStep()
       }, 1000);
-    } else if (!status.answer) {
+    } else if (!editAnswersStatus[index].answer) {
       wrongAnswer(question)
     }
   }

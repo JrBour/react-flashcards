@@ -34,7 +34,8 @@ export const CardFront = styled.div`
   width: 100%;
   transition: 1s transform ease, opacity linear .8s;
   box-shadow: 0 3px 10px 0 rgba(0,0,0,.18);
-  ${({ display }) => display ? 'transform: rotateY(0deg); opacity : 1' : 'transform: rotateY(180deg); opacity: 0' }
+  backface-visibility: hidden;
+  ${({ display }) => display ? 'transform: rotateY(0deg);' : 'transform: rotateY(180deg);' }
 
 `;
 
@@ -49,7 +50,8 @@ export const CardBack = styled.div`
   height: 100%;
   transition: 1s transform ease, opacity linear .8s;
   box-shadow: 0 3px 10px 0 rgba(0,0,0,.18);
-  ${({ display }) => display ? 'transform: rotateY(0); opacity : 1' : 'transform: rotateY(180deg); opacity: 0;' }
+  backface-visibility: hidden;
+  ${({ display }) => display ? 'transform: rotateY(0);' : 'transform: rotateY(180deg);' }
 `;
 
 export const CardText = styled.p`

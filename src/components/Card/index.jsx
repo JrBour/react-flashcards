@@ -2,24 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { edit } from 'store/features/cards';
 import { CardWrapper, CardFront, CardBack, CardText, CardContainer, ContinueButton } from './style';
+import useKeyPress from 'hook/useKeyboardEvent'
 
 const Card = ({ card, index, isEditable, nextStep }) => {
   const dispatch = useDispatch();
   const [currentCard, setCurrentCard] = useState(card);
+  const [hasAlreadyFlip, setHasAlreadyFlip] = useState(false);
+
+  useKeyPress(' ', () => editCard('front'))
 
   useEffect(() => {
     setCurrentCard({ ...card })
+    setHasAlreadyFlip(false)
   }, [card])
 
   const editCard = property => {
+    if (card.hide){
+      return;
+    }
+
     const newCard = {
       ...card,
       [property]: !currentCard[property]
     }
+
     if (isEditable){
       dispatch(edit({ index, card: newCard }))
     } else {
-      setCurrentCard(newCard);
+      setHasAlreadyFlip(true)
+      setCurrentCard({...newCard});
     }
   }
 
@@ -34,7 +45,7 @@ const Card = ({ card, index, isEditable, nextStep }) => {
         </CardBack>
       </CardWrapper>
       {isEditable && <button onClick={() => editCard('hide')}>Hide</button>}
-      {(!currentCard.front && nextStep) ? <ContinueButton onClick={nextStep}>Continue</ContinueButton> : null}
+      {hasAlreadyFlip ? <ContinueButton onClick={nextStep}>Continue</ContinueButton> : null}
     </CardContainer>
   );
 
