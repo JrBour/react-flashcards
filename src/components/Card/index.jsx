@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { edit } from 'store/features/cards';
-import { CardWrapper, CardFront, CardBack, CardText, CardContainer } from './style';
+import { CardWrapper, CardFront, CardBack, CardText, CardContainer, ContinueButton } from './style';
 
-const Card = ({ card, index, isEditable }) => {
+const Card = ({ card, index, isEditable, nextStep }) => {
   const dispatch = useDispatch();
   const [currentCard, setCurrentCard] = useState(card);
 
+  useEffect(() => {
+    setCurrentCard({ ...card })
+  }, [card])
 
   const editCard = property => {
     const newCard = {
@@ -22,15 +25,16 @@ const Card = ({ card, index, isEditable }) => {
 
   return (
     <CardContainer>
-      <CardWrapper>
+      <CardWrapper hide={card.hide ? 1 : 0}>
         <CardFront display={currentCard.front ? 1 : 0} onClick={() => editCard('front')}>
-          <CardText>{card.question}</CardText>
+          <CardText>{currentCard.question}</CardText>
         </CardFront>
         <CardBack display={!currentCard.front ? 1 : 0} onClick={() => editCard('front')}>
-          <CardText>{card.answer}</CardText>
+          <CardText>{currentCard.answer}</CardText>
         </CardBack>
       </CardWrapper>
       {isEditable && <button onClick={() => editCard('hide')}>Hide</button>}
+      {(!currentCard.front && nextStep) ? <ContinueButton onClick={nextStep}>Continue</ContinueButton> : null}
     </CardContainer>
   );
 

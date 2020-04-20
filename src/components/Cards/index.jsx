@@ -8,7 +8,7 @@ const Cards = () => {
   const cards = useSelector(getCards);
   return (
     <CardsWrapper>
-      {cards.map((card, index) => <Card key={index} index={index} card={card}/>)}
+      {cards.map((card, index) => <Card key={index} index={index} card={card} isEditable/>)}
     </CardsWrapper>
   );
 }

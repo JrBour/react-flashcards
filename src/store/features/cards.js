@@ -4,7 +4,7 @@ const initialState = {
   cardsList : [
   {
     question: 'How to buffer an object ?',
-    answer: 'Buffer. from(JSON.stringify(object)). toString()',
+    answer: 'Buffer. from(JSON. stringify(object)). toString()',
     hide: false,
     front: true,  
   },
@@ -12,7 +12,7 @@ const initialState = {
     question: 'What means API ?',
     answer: 'Application Programming Interface',
     hide: false,
-    front: true,  
+    front: true,
   },
   {
     question: 'Whats the function of var definition ?',

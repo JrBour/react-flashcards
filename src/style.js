@@ -10,4 +10,5 @@ export const NavItem = styled.li`
   cursor: pointer;
   text-transform: uppercase;
   padding-left: 20px;
+  font-family: sans-serif;
 `;

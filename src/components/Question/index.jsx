@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { AnswerItem, AnswersWrapper } from './style';
+import { AnswerItem, AnswersWrapper, QuestionTitle } from './style';
 
-const Question = ({ question, answers, nextStep }) => {
+const Question = ({ question, answers, nextStep, wrongAnswer }) => {
 
   const [answersStatus, setAnswersStatus] = useState([]);
   // Reset this after each change of question
@@ -18,6 +18,7 @@ const Question = ({ question, answers, nextStep }) => {
   const checkAnswer = (status, index) => {
     const editAnswersStatus = answers.map((answer, answerIndex) => {
       if (answerIndex === index) {
+
         return ({
           click: true,
           answer: answer.answer === question.answer
@@ -29,16 +30,19 @@ const Question = ({ question, answers, nextStep }) => {
 
     setAnswersStatus(editAnswersStatus);
     
+    console.log(status)
     if (status.answer) {
       setTimeout(() => {
         nextStep()
       }, 1000);
-    } 
+    } else if (!status.answer) {
+      wrongAnswer(question)
+    }
   }
 
   return (
   <>
-    <h1>{question.question}</h1>
+    <QuestionTitle>{question.question}</QuestionTitle>
     {answersStatus.length > 0 && (
       <AnswersWrapper>{answers.map(({ answer }, index) => (
         <AnswerItem 
